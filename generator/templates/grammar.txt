@@ -1,0 +1,2 @@
+# This file should contain the predefined grammar.
+# For now, it's just a placeholder.
