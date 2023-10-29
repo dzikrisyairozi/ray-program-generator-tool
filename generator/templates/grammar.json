@@ -1,0 +1,42 @@
+{
+    "Starting_rule": ["import ray", "t_new_line", "Import_stuff", "Actual_Program"],
+    "Import_stuff": ["import_single_library", "t_new_line", "Import_stuff", "|", "ε"],
+    "import_single_library": ["import", "t_library_name", "|", "from", "t_library_name", "import", "t_sub_library"],
+
+    "Actual_program": ["ray.init()", "t_new_line", "Decl_Classes", "Decl_functions", "Real_computations"],
+
+    "Decl_Classes": ["Normal_Python_Class", "|", "Ray_Remote_Class", "|", "ε"],
+    "Normal_Python_Class": ["# Ignore, generate blank for now"],
+    "Ray_Remote_Class": ["@ray.remote", "t_new_line", "class", "t_classname", ":", "t_new_line", "Class_body"],
+
+    "Class_body": ["Init_function", "Other_class_functions", "|", "ε"],
+    "Init_function": ["t_tab", "def __init__(self):", "t_new_line", "Init_function_body", "|", "ε"],
+    "Init_function_body": ["t_tab", "t_tab", "Self_initialize", "t_new_line", "Init_function_body", "|", "ε"],
+    "Self_initialize": ["self.", "t_variable", "=", "t_expression", "t_new_line"],
+
+    "Other_class_functions": ["Class_function", "|", "ε"],
+    "Class_function": ["t_tab", "def", "t_function_name", "(", "t_self", "Other_arguments_list", ")", ":", "t_new_line", "Class_function_body"],
+    "Other_arguments_list": [",", "t_variable", "Other_arguments_list", "|", "ε"],
+    "Class_function_body": ["t_tab", "t_tab", "t_statement", "t_new_line", "Class_function_body", "|", "ε"],
+
+    "Decl_functions": ["Normal_Python_Function", "|", "Ray_Remote_Function", "|", "ε"],
+    "Normal_Python_Function": ["# Placeholder for normal Python function syntax"],
+    "Ray_Remote_Function": ["@ray.remote", "t_new_line", "def", "t_function_name", "(", "Arguments_list", ")", ":", "t_new_line", "Function_body"],
+    "Arguments_list": ["t_variable", "|", "t_variable", ",", "Arguments_list", "|", "ε"],
+    "Function_body": ["t_tab", "t_statement", "t_new_line", "Function_body", "|", "ε"],
+
+    "Real_computations": ["t_statement", "t_new_line", "Real_computations", "|", "ε"],
+
+    "Tokens": {
+        "t_classname": "[a-zA-Z_][a-zA-Z0-9_]*",
+        "t_function_name": "[a-zA-Z_][a-zA-Z0-9_]*",
+        "t_variable": "[a-zA-Z_][a-zA-Z0-9_]*",
+        "t_expression": "# Placeholder for expression syntax",
+        "t_statement": "# Placeholder for statement syntax",
+        "t_library_name": "[a-zA-Z_][a-zA-Z0-9_]*",
+        "t_sub_library": "[a-zA-Z_][a-zA-Z0-9_]*",
+        "t_self": "self",
+        "t_new_line": "\\n",
+        "t_tab": "\\t"
+    }
+}

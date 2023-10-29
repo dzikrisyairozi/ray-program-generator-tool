@@ -1,9 +1,18 @@
+import json
+
 class GrammarParser:
     def __init__(self):
-        self.grammar_file = "./templates/predefined_grammar.txt"
+        self.grammar_file = "generator/templates/basic_remote.json"
     
     def parse_grammar(self):
-        # Placeholder for grammar parsing logic
-        grammar_structure = {}
-        # TODO: Implement the actual grammar parsing logic here
-        return grammar_structure
+        # Read the JSON file containing the grammar
+        try:
+            with open(self.grammar_file, 'r') as file:
+                grammar_structure = json.load(file)
+            return grammar_structure
+        except FileNotFoundError:
+            print(f"Grammar file not found at {self.grammar_file}.")
+            return {}
+        except json.JSONDecodeError:
+            print(f"Error parsing JSON from {self.grammar_file}.")
+            return {}

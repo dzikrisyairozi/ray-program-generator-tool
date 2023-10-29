@@ -1,0 +1,28 @@
+{
+    "Starting_rule": [["import ray", "t_new_line", "Actual_Program"]],
+
+    "Actual_Program": [["ray.init()", "t_new_line", "Ray_Remote_Function", "t_new_line", "Main_Logic"]],
+
+    "Ray_Remote_Function": [["@ray.remote", "t_new_line", "def", "t_function_name", "(", "Arguments_list", ")", ":", "t_new_line", "Function_body"]],
+
+    "Arguments_list": [["t_variable"], ["t_variable", ",", "Arguments_list"]],
+
+    "Function_body": [["t_tab", "return", "t_expression", "t_new_line"]],
+
+    "Main_Logic": [["t_var_declaration", "t_equals", "List_Comprehension", "t_new_line", "Print_Statement"]],
+
+    "List_Comprehension": [["[", "t_function_name", ".remote(", "i", ")", "for", "i", "in", "range(", "t_number", ")", "]"]],
+
+    "Print_Statement": [["print(", "ray.get(", "t_var_declaration", ")", ")"]],
+
+    "Tokens": {
+        "t_function_name": "[a-zA-Z_][a-zA-Z0-9_]*",
+        "t_variable": "[a-zA-Z_][a-zA-Z0-9_]*",
+        "t_expression": "[a-zA-Z_][a-zA-Z0-9_]* \\* [a-zA-Z_][a-zA-Z0-9_]*",
+        "t_var_declaration": "[a-zA-Z_][a-zA-Z0-9_]*",
+        "t_number": "\\d+",
+        "t_new_line": "\\n",
+        "t_tab": "\\t",
+        "t_equals": "="
+    }
+}
