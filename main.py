@@ -31,7 +31,12 @@ def main():
     print(generated_program)
 
     # Save the generated program to a file in the output directory
-    output_file = os.path.join(output_dir, "generated_program_1.py")
+    file_number = 1
+    output_file = os.path.join(output_dir, f"generated_program_{file_number}.py")
+    while os.path.exists(output_file):
+        file_number += 1
+        output_file = os.path.join(output_dir, f"generated_program_{file_number}.py")
+        
     with open(output_file, "w") as file:
         file.write(generated_program)
     print(f"Generated program saved as '{output_file}'")
