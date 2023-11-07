@@ -2,7 +2,7 @@ import json
 
 class GrammarParser:
     def __init__(self):
-        self.grammar_file = "generator/templates/grammar/basic_remote.json"
+        self.grammar_file = "utils/templates/grammar/basic_remote.json"
     
     def parse_grammar(self):
         # Read the JSON file containing the grammar

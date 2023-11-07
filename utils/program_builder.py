@@ -6,6 +6,7 @@ class ProgramBuilder:
         self.grammar_structure = grammar_structure
         self.context = {}  # Context to maintain consistency
         self.argument_vars = set()  # Track variables for arguments
+        self.function_arg_count = {}  # Track number of arguments for each function
 
     def build_program(self):
         # Starting point for building the program
@@ -27,10 +28,29 @@ class ProgramBuilder:
                 generated += self.generate_code(part)
 
         # Clear argument variables after generating a function
+    # After generating a function, reset argument variables
         if current_rule == "Ray_Remote_Function":
+            self.function_arg_count[self.context.get("t_function_name", "")] = len(self.argument_vars)
             self.argument_vars.clear()
+
+        # Handle dynamic function calls
+        if current_rule == "Dynamic_Function_Call":
+            func_name = self.context.get("t_function_name", "")
+            arg_count = self.function_arg_count.get(func_name, 1)
+            return self.generate_dynamic_function_call(func_name, arg_count)
+
         
         return generated
+    
+    
+    def generate_dynamic_function_call(self, func_name, arg_count):
+        args = ['i']
+        if arg_count > 1:
+            args.append(str(random.randint(1, 10)))  # Add a second argument if needed
+        args_str = ', '.join(args)
+        return f"{func_name}.remote({args_str}) "
+    
+
 
     def generate_token(self, token_name, current_rule):
         if token_name == "t_new_line":
@@ -55,19 +75,28 @@ class ProgramBuilder:
             return generated_token + " "
         else:
             return token_name + " "
-
+    
+       
     def generate_argument_variable(self):
-        while True:
+        # Generate and add a new argument variable only if less than two arguments exist
+        if len(self.argument_vars) < 2:
             var_name = "var" + str(random.randint(0, 10))
-            if var_name not in self.argument_vars:
-                self.argument_vars.add(var_name)
-                return var_name + " "
+            while var_name in self.argument_vars:  # Ensure unique names
+                var_name = "var" + str(random.randint(0, 10))
+            self.argument_vars.add(var_name)
+            return var_name + " "
+        else:
+            return ""
 
     def generate_expression(self):
-        if self.argument_vars:
-            var1 = random.choice(list(self.argument_vars))
-            var2 = random.choice(list(self.argument_vars))
+        arg_list = list(self.argument_vars)
+        if len(arg_list) >= 2:
+            # Randomly select two different arguments
+            var1, var2 = random.sample(arg_list, 2)
             return f"{var1} * {var2} "
+        elif len(arg_list) == 1:
+            # Use the single argument twice if only one is available
+            return f"{arg_list[0]} * {arg_list[0]} "
         return "example "
 
     @staticmethod

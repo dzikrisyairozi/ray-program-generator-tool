@@ -1,5 +1,5 @@
-from generator.grammar_parser import GrammarParser
-from generator.program_builder import ProgramBuilder
+from utils.grammar_parser import GrammarParser
+from utils.program_builder import ProgramBuilder
 import os
 
 def main():

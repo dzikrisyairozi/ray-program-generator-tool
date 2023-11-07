@@ -11,7 +11,11 @@
 
     "Main_Logic": [["t_var_declaration", "t_equals", "List_Comprehension", "t_new_line", "Print_Statement"]],
 
-    "List_Comprehension": [["[", "t_function_name", ".remote(", "i", ")", "for", "i", "in", "range(", "t_number", ")", "]"]],
+    "List_Comprehension": [["[", "Dynamic_Function_Call", "for", "i", "in", "range(", "t_number", ")", "]"]],
+
+    "Dynamic_Function_Call": [["t_function_name", ".remote(", "Dynamic_Arguments", ")"]],
+    
+    "Dynamic_Arguments": [["i"], ["i", ",", "Dynamic_Arguments"]],
 
     "Print_Statement": [["print(", "ray.get(", "t_var_declaration", ")", ")"]],
 
